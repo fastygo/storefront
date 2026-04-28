@@ -1,0 +1,10 @@
+.vercel/
+bin/
+dist/
+tmp/
+*.exe
+*.test
+coverage.out
+.manual/
+.cursorignore
+node_modules/
