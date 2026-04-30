@@ -11,6 +11,7 @@ type StorefrontPageProps struct {
 	Hero        HeroProps
 	Categories  []CategoryCard
 	Collections []CollectionCard
+	About       AboutProps
 	Benefits    []BenefitItem
 	Product     ProductPreview
 	Rail        RailProps
@@ -47,6 +48,13 @@ type CollectionCard struct {
 	Description string
 	Href        string
 	Image       ImageRef
+}
+
+type AboutProps struct {
+	Kicker      string
+	Title       string
+	Description string
+	Items       []BenefitItem
 }
 
 type BenefitItem struct {

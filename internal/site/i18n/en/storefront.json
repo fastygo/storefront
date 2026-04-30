@@ -46,6 +46,16 @@
     { "label": "", "title": "Japandi Light", "description": "Warm minimalism and tactile materials.", "href": "#", "image": { "alt": "Japandi room placeholder" } },
     { "label": "Limited", "title": "Nordic Form", "description": "Graphical objects for dining zones.", "href": "#", "image": { "alt": "Dining table placeholder" } }
   ],
+  "about": {
+    "kicker": "About the studio",
+    "title": "Calm interiors without visual noise",
+    "description": "Studio is a furniture storefront prototype where collections, materials, and service are presented as one neutral retail experience. This copy is intentionally generic and ready for a real brand story.",
+    "items": [
+      { "icon": "", "title": "12 years", "description": "of object design practice" },
+      { "icon": "", "title": "240+", "description": "models in the core catalog" },
+      { "icon": "", "title": "14 days", "description": "for an easy return" }
+    ]
+  },
   "benefits": [
     { "icon": "leaf", "title": "Natural materials", "description": "Responsible and durable" },
     { "icon": "hand", "title": "Hand work", "description": "Every detail is finished carefully" },

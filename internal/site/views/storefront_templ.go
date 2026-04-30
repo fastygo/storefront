@@ -44,6 +44,7 @@ func storefrontProps(data Page) storefrontui.StorefrontPageProps {
 		Hero:        heroProps(data.Hero),
 		Categories:  categoryCards(data.Categories),
 		Collections: collectionCards(data.Collections),
+		About:       aboutProps(data.About),
 		Benefits:    benefitItems(data.Benefits),
 		Product:     productPreview(data.Product),
 		Rail:        railProps(data.Rail),
@@ -110,6 +111,15 @@ func collectionCards(items []Collection) []storefrontui.CollectionCard {
 		})
 	}
 	return out
+}
+
+func aboutProps(item About) storefrontui.AboutProps {
+	return storefrontui.AboutProps{
+		Kicker:      item.Kicker,
+		Title:       item.Title,
+		Description: item.Description,
+		Items:       benefitItems(item.Items),
+	}
 }
 
 func benefitItems(items []Benefit) []storefrontui.BenefitItem {

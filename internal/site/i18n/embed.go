@@ -44,6 +44,7 @@ type StorefrontFixture struct {
 	Hero        HeroFixture     `json:"hero"`
 	Categories  []Category      `json:"categories"`
 	Collections []Collection    `json:"collections"`
+	About       About           `json:"about"`
 	Benefits    []Benefit       `json:"benefits"`
 	Product     Product         `json:"product"`
 	Rail        Rail            `json:"rail"`
@@ -75,6 +76,13 @@ type Collection struct {
 	Description string       `json:"description"`
 	Href        string       `json:"href"`
 	Image       ImageFixture `json:"image"`
+}
+
+type About struct {
+	Kicker      string    `json:"kicker"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Items       []Benefit `json:"items"`
 }
 
 type Benefit struct {

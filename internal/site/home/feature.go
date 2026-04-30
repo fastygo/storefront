@@ -117,6 +117,7 @@ func pageData(f i18n.StorefrontFixture) views.Page {
 		Hero:        heroData(f.Hero),
 		Categories:  categories(f.Categories),
 		Collections: collections(f.Collections),
+		About:       about(f.About),
 		Benefits:    benefits(f.Benefits),
 		Product:     product(f.Product),
 		Rail:        rail(f.Rail),
@@ -162,6 +163,15 @@ func collections(items []i18n.Collection) []views.Collection {
 		})
 	}
 	return out
+}
+
+func about(item i18n.About) views.About {
+	return views.About{
+		Kicker:      item.Kicker,
+		Title:       item.Title,
+		Description: item.Description,
+		Items:       benefits(item.Items),
+	}
 }
 
 func benefits(items []i18n.Benefit) []views.Benefit {

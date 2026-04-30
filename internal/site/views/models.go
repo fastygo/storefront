@@ -20,6 +20,7 @@ type Page struct {
 	Hero        Hero
 	Categories  []Category
 	Collections []Collection
+	About       About
 	Benefits    []Benefit
 	Product     Product
 	Rail        Rail
@@ -62,6 +63,13 @@ type Collection struct {
 	Description string
 	Href        string
 	Image       Image
+}
+
+type About struct {
+	Kicker      string
+	Title       string
+	Description string
+	Items       []Benefit
 }
 
 type Benefit struct {
