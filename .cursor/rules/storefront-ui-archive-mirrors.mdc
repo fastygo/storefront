@@ -1,0 +1,14 @@
+---
+description: Storefront UI source copies and archive mirrors
+alwaysApply: true
+---
+
+# Storefront UI Mirrors
+
+- Active app UI source lives in `internal/site/ui/blocks` and `internal/site/ui/elements`.
+- Treat external `Blocks/` and `Elements/` folders as archive mirrors only, not as runtime libraries and not as required workspace roots.
+- Do not import from `Blocks/` or `Elements/` in Storefront code. Storefront composes local copies under `internal/site/ui`.
+- When designing or filling `blocks` and `elements`, keep code mirror-friendly: portable package structure, no app-only hidden coupling outside the local Storefront data contracts.
+- Mirroring is documented in `internal/site/ui/README.md` and checked with `.project/compare-folders.sh`.
+- The mirror script excludes generated `*_templ.go`; regenerate templ output in Storefront with `templ generate ./...` after source changes.
+- Avoid assuming the archive folders are open in the workspace. If comparison is needed, use the mirror script or explicitly ask before relying on external archive paths.
