@@ -318,5 +318,6 @@ func action(item i18n.ActionFixture) views.Action {
 		Label:     item.Label,
 		Href:      item.Href,
 		AriaLabel: item.AriaLabel,
+		Icon:      item.Icon,
 	}
 }

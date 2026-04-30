@@ -1,0 +1,193 @@
+package navigation
+
+import (
+	"strings"
+
+	t "github.com/a-h/templ"
+	cmp "github.com/fastygo/ui8kit/components"
+	"github.com/fastygo/ui8kit/ui"
+)
+
+type MobileMenuButtonProps struct {
+	ID       string
+	TargetID string
+	Label    string
+	Icon     t.Component
+}
+
+type NavItem struct {
+	Label     string
+	Href      string
+	IconLabel string
+	Icon      t.Component
+	Children  []NavItem
+	Open      bool
+	Value     string
+}
+
+type NavListProps struct {
+	Items  []NavItem
+	Active string
+	Label  string
+}
+
+type HeaderNavProps struct {
+	Items []NavItem
+	Label string
+}
+
+templ MobileMenuButton(props MobileMenuButtonProps) {
+	@ui.ButtonBlock(ui.ButtonProps{ID: mobileMenuButtonID(props.ID), Variant: "unstyled", Class: "ui-header-menu-btn", AriaLabel: mobileMenuButtonLabel(props.Label), Attrs: mobileMenuButtonAttrs(props)}) {
+		if props.Icon != nil {
+			@props.Icon
+		}
+	}
+}
+
+templ NavList(props NavListProps) {
+	for _, item := range props.Items {
+		if len(item.Children) > 0 {
+			@navBranch(item, props)
+		} else {
+			@navLink(item, props)
+		}
+	}
+}
+
+templ HeaderNav(props HeaderNavProps) {
+	if len(props.Items) > 0 {
+		<div class="ui-header-nav-wrap">
+			<nav class="ui-header-nav" aria-label={ headerNavLabel(props.Label) }>
+				for _, item := range props.Items {
+					if isExternalHref(item.Href) {
+						<a href={ t.URL(item.Href) } class="ui-header-nav-link" target="_blank" rel="noopener noreferrer">
+							{ item.Label }
+						</a>
+					} else {
+						<a href={ t.URL(item.Href) } class="ui-header-nav-link">
+							{ item.Label }
+						</a>
+					}
+				}
+			</nav>
+		</div>
+	}
+}
+
+templ navBranch(item NavItem, props NavListProps) {
+	@cmp.Accordion(cmp.AccordionProps{
+		Type: "single",
+	}) {
+		@cmp.AccordionItem(cmp.AccordionItemProps{
+			Value: navItemValue(item),
+			Open:  item.Open,
+		}) {
+			@cmp.AccordionTrigger(cmp.AccordionTriggerProps{
+				Class: navInactiveItemClass(),
+				Value: navItemValue(item),
+				Open:  item.Open,
+			}) {
+				@navItemBody(item)
+			}
+			@cmp.AccordionContent(cmp.AccordionContentProps{
+				Value: navItemValue(item),
+				Open:  item.Open,
+			}) {
+				<div>
+					@NavList(NavListProps{
+						Items:  item.Children,
+						Active: props.Active,
+						Label:  props.Label,
+					})
+				</div>
+			}
+		}
+	}
+}
+
+templ navLink(item NavItem, props NavListProps) {
+	if item.Href == props.Active {
+		<a href={ t.URL(item.Href) } class={ navActiveItemClass() } aria-current="page">
+			@navItemBody(item)
+		</a>
+	} else if isExternalHref(item.Href) {
+		<a href={ t.URL(item.Href) } class={ navInactiveItemClass() } target="_blank" rel="noopener noreferrer">
+			@navItemBody(item)
+		</a>
+	} else {
+		<a href={ t.URL(item.Href) } class={ navInactiveItemClass() }>
+			@navItemBody(item)
+		</a>
+	}
+}
+
+templ navItemBody(item NavItem) {
+	@navItemIcon(item)
+	<span class="ui-sidebar-item-label">{ item.Label }</span>
+}
+
+templ navItemIcon(item NavItem) {
+	if item.Icon != nil {
+		@item.Icon
+	}
+}
+
+func mobileMenuButtonID(value string) string {
+	if strings.TrimSpace(value) != "" {
+		return value
+	}
+	return "mobile-menu-button"
+}
+
+func mobileMenuButtonTargetID(value string) string {
+	if strings.TrimSpace(value) != "" {
+		return value
+	}
+	return "mobile-menu"
+}
+
+func mobileMenuButtonLabel(value string) string {
+	if strings.TrimSpace(value) != "" {
+		return value
+	}
+	return "Open navigation menu"
+}
+
+func mobileMenuButtonAttrs(props MobileMenuButtonProps) t.Attributes {
+	targetID := mobileMenuButtonTargetID(props.TargetID)
+	return t.Attributes{
+		"data-ui8kit-dialog-open":   true,
+		"data-ui8kit-dialog-target": targetID,
+		"aria-haspopup":             "dialog",
+		"aria-controls":             targetID,
+	}
+}
+
+func headerNavLabel(value string) string {
+	if strings.TrimSpace(value) != "" {
+		return value
+	}
+	return "Main navigation"
+}
+
+func isExternalHref(href string) bool {
+	return strings.HasPrefix(href, "http://") || strings.HasPrefix(href, "https://")
+}
+
+func navItemValue(item NavItem) string {
+	if strings.TrimSpace(item.Value) != "" {
+		return item.Value
+	}
+	if strings.TrimSpace(item.Href) != "" {
+		return item.Href
+	}
+	return item.Label
+}
+
+func navActiveItemClass() string {
+	return "ui-sidebar-item-active"
+}
+
+func navInactiveItemClass() string {
+	return "ui-sidebar-item-inactive"
+}

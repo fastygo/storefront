@@ -18,7 +18,7 @@
     }
   },
   "nav": [
-    { "label": "Catalog", "href": "/", "aria_label": "Open catalog" },
+    { "label": "Catalog", "href": "#catalog", "aria_label": "Open catalog" },
     { "label": "Collections", "href": "#collections", "aria_label": "View collections" },
     { "label": "About", "href": "#about", "aria_label": "About the store" },
     { "label": "Delivery", "href": "#delivery", "aria_label": "Delivery information" },
@@ -140,9 +140,9 @@
       "submit_label": "Subscribe"
     },
     "socials": [
-      { "label": "IG", "href": "#", "aria_label": "Instagram" },
-      { "label": "PI", "href": "#", "aria_label": "Pinterest" },
-      { "label": "TG", "href": "#", "aria_label": "Telegram" }
+      { "label": "Vimeo", "href": "#", "aria_label": "Vimeo", "icon": "vimeo" },
+      { "label": "TG", "href": "#", "aria_label": "Telegram", "icon": "send" },
+      { "label": "VK", "href": "#", "aria_label": "VK", "icon": "vk" }
     ]
   },
   "footer": {

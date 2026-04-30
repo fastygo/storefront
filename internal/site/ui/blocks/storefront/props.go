@@ -1,30 +1,4 @@
-package views
-
-import (
-	"github.com/fastygo/framework/pkg/app"
-	"github.com/fastygo/framework/pkg/web/view"
-)
-
-type LayoutData struct {
-	Title          string
-	Locale         string
-	Active         string
-	BrandName      string
-	NavItems       []app.NavItem
-	HeaderNavItems []app.NavItem
-	ThemeToggle    view.ThemeToggleData
-	LanguageToggle view.LanguageToggleData
-}
-
-type Page struct {
-	Hero        Hero
-	Categories  []Category
-	Collections []Collection
-	Benefits    []Benefit
-	Product     Product
-	Rail        Rail
-	Footer      Footer
-}
+package storefront
 
 type Action struct {
 	Label     string
@@ -33,11 +7,17 @@ type Action struct {
 	Icon      string
 }
 
-type Image struct {
-	Alt string
+type StorefrontPageProps struct {
+	Hero        HeroProps
+	Categories  []CategoryCard
+	Collections []CollectionCard
+	Benefits    []BenefitItem
+	Product     ProductPreview
+	Rail        RailProps
+	Footer      FooterProps
 }
 
-type Hero struct {
+type HeroProps struct {
 	Kicker       string
 	Title        string
 	Description  string
@@ -46,75 +26,80 @@ type Hero struct {
 	SlideTotal   string
 	Previous     Action
 	Next         Action
-	Image        Image
+	Image        ImageRef
 }
 
-type Category struct {
+type ImageRef struct {
+	Src string
+	Alt string
+}
+
+type CategoryCard struct {
 	Title string
 	Count string
 	Href  string
-	Image Image
+	Image ImageRef
 }
 
-type Collection struct {
+type CollectionCard struct {
 	Label       string
 	Title       string
 	Description string
 	Href        string
-	Image       Image
+	Image       ImageRef
 }
 
-type Benefit struct {
+type BenefitItem struct {
 	Icon        string
 	Title       string
 	Description string
 }
 
-type Product struct {
+type ProductPreview struct {
 	Badge          string
 	Name           string
 	Price          string
 	OldPrice       string
 	Description    string
-	Gallery        []Image
-	MainImage      Image
+	Gallery        []ImageRef
+	MainImage      ImageRef
 	ColorsLabel    string
-	Colors         []Swatch
+	Colors         []SwatchItem
 	SelectedColor  string
-	Quantity       Quantity
+	Quantity       QuantityProps
 	AddAction      Action
 	FavoriteAction Action
-	Details        []Detail
+	Details        []DetailRow
 }
 
-type Swatch struct {
+type SwatchItem struct {
 	Label    string
 	Value    string
 	Class    string
 	Selected bool
 }
 
-type Quantity struct {
+type QuantityProps struct {
 	Label      string
 	Value      string
 	MinusLabel string
 	PlusLabel  string
 }
 
-type Detail struct {
+type DetailRow struct {
 	Label string
 	Value string
 }
 
-type Rail struct {
-	Cart        Cart
-	Filter      Filter
-	Inspiration Inspiration
-	Newsletter  Newsletter
+type RailProps struct {
+	Cart        CartSummary
+	Filter      FilterPanel
+	Inspiration InspirationCard
+	Newsletter  NewsletterProps
 	Socials     []Action
 }
 
-type Cart struct {
+type CartSummary struct {
 	Title          string
 	CountLabel     string
 	Items          []CartItem
@@ -128,19 +113,19 @@ type CartItem struct {
 	Title    string
 	Subtitle string
 	Price    string
-	Image    Image
+	Image    ImageRef
 }
 
-type Filter struct {
+type FilterPanel struct {
 	Title         string
 	ResetLabel    string
 	CategoryLabel string
 	CategoryValue string
 	MaterialLabel string
-	Materials     []Swatch
+	Materials     []SwatchItem
 	Price         PriceRange
 	ColorLabel    string
-	Colors        []Swatch
+	Colors        []SwatchItem
 	ShowAllAction Action
 }
 
@@ -151,21 +136,21 @@ type PriceRange struct {
 	Value    string
 }
 
-type Inspiration struct {
+type InspirationCard struct {
 	Title       string
 	Description string
 	Action      Action
-	Image       Image
+	Image       ImageRef
 }
 
-type Newsletter struct {
+type NewsletterProps struct {
 	Title       string
 	Description string
 	Placeholder string
 	SubmitLabel string
 }
 
-type Footer struct {
+type FooterProps struct {
 	BrandName string
 	Copyright string
 	Groups    []FooterGroup

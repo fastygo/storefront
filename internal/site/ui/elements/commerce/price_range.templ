@@ -1,0 +1,34 @@
+package commerce
+
+import (
+	"strings"
+
+	"github.com/fastygo/ui8kit/ui"
+)
+
+type PriceRangeProps struct {
+	Label    string
+	MinLabel string
+	MaxLabel string
+	Value    string
+}
+
+templ PriceRange(props PriceRangeProps) {
+	@ui.Stack(ui.StackProps{Class: "gap-2"}) {
+		if strings.TrimSpace(props.Label) != "" {
+			@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground"}, props.Label)
+		}
+		<div class="relative h-2 rounded-full bg-muted" aria-hidden="true">
+			<span class="absolute left-0 right-0 top-0 h-2 rounded-full bg-primary"></span>
+			<span class="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border border-border bg-background shadow"></span>
+			<span class="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border border-border bg-background shadow"></span>
+		</div>
+		@ui.Group(ui.GroupProps{Class: "justify-between"}) {
+			@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, props.MinLabel)
+			if strings.TrimSpace(props.Value) != "" {
+				@ui.Text(ui.TextProps{FontSize: "xs", FontWeight: "medium"}, props.Value)
+			}
+			@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, props.MaxLabel)
+		}
+	}
+}

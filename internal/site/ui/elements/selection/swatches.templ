@@ -1,0 +1,66 @@
+package selection
+
+import (
+	"strings"
+
+	t "github.com/a-h/templ"
+	"github.com/fastygo/ui8kit/ui"
+	"github.com/fastygo/ui8kit/utils"
+)
+
+type Swatch struct {
+	Label    string
+	Value    string
+	Class    string
+	Selected bool
+}
+
+type SwatchGroupProps struct {
+	Label         string
+	Items         []Swatch
+	SelectedValue string
+}
+
+templ SwatchGroup(props SwatchGroupProps) {
+	if len(props.Items) > 0 {
+		@ui.Stack(ui.StackProps{Class: "gap-2"}) {
+			if strings.TrimSpace(props.Label) != "" {
+				@ui.Text(ui.TextProps{Class: "text-sm text-muted-foreground", FontSize: "sm", TextColor: "muted-foreground"}, props.Label)
+			}
+			@ui.Group(ui.GroupProps{Class: "gap-2 flex-wrap"}) {
+				for _, item := range props.Items {
+					@ui.ButtonBlock(ui.ButtonProps{
+						Type:      "button",
+						Variant:   "unstyled",
+						Class:     utils.Cn("inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background", selectedBorderClass(item, props.SelectedValue)),
+						AriaLabel: item.Label,
+						Attrs:     swatchAttrs(item, props.SelectedValue),
+					}) {
+						<span class={ utils.Cn("block h-5 w-5 rounded-full border border-border bg-muted", item.Class) }></span>
+					}
+				}
+			}
+		}
+	}
+}
+
+func swatchAttrs(item Swatch, selectedValue string) t.Attributes {
+	return t.Attributes{
+		"aria-pressed": swatchSelected(item, selectedValue),
+		"data-value":   item.Value,
+	}
+}
+
+func swatchSelected(item Swatch, selectedValue string) bool {
+	if item.Selected {
+		return true
+	}
+	return strings.TrimSpace(selectedValue) != "" && item.Value == selectedValue
+}
+
+func selectedBorderClass(item Swatch, selectedValue string) string {
+	if swatchSelected(item, selectedValue) {
+		return "border-primary"
+	}
+	return ""
+}

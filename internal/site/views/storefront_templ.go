@@ -8,7 +8,7 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import storefrontui "github.com/fastygo/storefront/internal/site/storefrontui"
+import storefrontui "github.com/fastygo/storefront/internal/site/ui/blocks/storefront"
 
 func StorefrontPage(data Page) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -287,6 +287,7 @@ func action(item Action) storefrontui.Action {
 		Label:     item.Label,
 		Href:      item.Href,
 		AriaLabel: item.AriaLabel,
+		Icon:      item.Icon,
 	}
 }
 

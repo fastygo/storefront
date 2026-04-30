@@ -1,0 +1,330 @@
+package storefront
+
+import (
+	"strings"
+
+	cmp "github.com/fastygo/ui8kit/components"
+	"github.com/fastygo/ui8kit/ui"
+)
+
+templ StorefrontPage(props StorefrontPageProps) {
+	@ui.Box(ui.BoxProps{Class: "w-full bg-background text-foreground"}) {
+		@ui.Container(ui.ContainerProps{Class: "py-6"}) {
+			@ui.Grid(ui.GridProps{Class: "grid grid-cols-1 gap-6 xl:grid-cols-4"}) {
+				@ui.GridCol(ui.GridColProps{Class: "min-w-0 xl:col-span-3"}) {
+					@ui.Stack(ui.StackProps{Class: "gap-6"}) {
+						@Hero(props.Hero)
+						@CategoryGrid(props.Categories)
+						@CollectionStrip(props.Collections)
+						@BenefitsBar(props.Benefits)
+						@ProductShowcase(props.Product)
+					}
+				}
+				@ui.GridCol(ui.GridColProps{Class: "grid gap-6 xl:sticky xl:top-6 xl:self-start"}) {
+					@RightRail(props.Rail)
+				}
+			}
+			@Footer(props.Footer)
+		}
+	}
+}
+
+templ Hero(props HeroProps) {
+	<section id="hero" class="overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm">
+		@ui.Grid(ui.GridProps{Cols: "1-2", Class: "items-center gap-6"}) {
+			@ui.Stack(ui.StackProps{Class: "gap-6"}) {
+				if strings.TrimSpace(props.Kicker) != "" {
+					@ui.Text(ui.TextProps{FontSize: "sm", FontWeight: "semibold", TextColor: "muted-foreground"}, props.Kicker)
+				}
+				@ui.Title(ui.TitleProps{Order: 1, FontSize: "5xl", FontWeight: "bold", LineHeight: "tight"}, props.Title)
+				if strings.TrimSpace(props.Description) != "" {
+					@ui.Text(ui.TextProps{Class: "max-w-sm", TextColor: "muted-foreground", LineHeight: "relaxed"}, props.Description)
+				}
+				if hasAction(props.Primary) {
+					@ui.Button(ui.ButtonProps{Href: props.Primary.Href, Variant: "primary", Size: "lg", AriaLabel: actionLabel(props.Primary), Class: "rounded-full"}, props.Primary.Label)
+				}
+			}
+			@ui.Box(ui.BoxProps{Class: "relative overflow-hidden rounded-lg bg-muted"}) {
+				@ui.Image(ui.ImageProps{Src: imageSrc(props.Image, PlaceholderHeroInterior), Alt: props.Image.Alt, Class: "h-full min-h-80 w-full object-cover", Loading: "eager"})
+				@ui.Group(ui.GroupProps{Class: "absolute bottom-4 right-4 gap-2 rounded-full border border-border bg-background p-2 shadow"}) {
+					@ui.Text(ui.TextProps{FontSize: "xs", FontWeight: "semibold"}, labelOrFallback(props.SlideCurrent, "01"))
+					@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, "-")
+					@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, labelOrFallback(props.SlideTotal, "03"))
+					@ui.Button(ui.ButtonProps{Variant: "outline", Size: "icon", AriaLabel: actionLabel(props.Previous), Class: "h-8 w-8 rounded-full"}, "<")
+					@ui.Button(ui.ButtonProps{Variant: "outline", Size: "icon", AriaLabel: actionLabel(props.Next), Class: "h-8 w-8 rounded-full"}, ">")
+				}
+			}
+		}
+	</section>
+}
+
+templ CategoryGrid(items []CategoryCard) {
+	if len(items) > 0 {
+		<section id="categories" class="ui-stack gap-4">
+			@ui.Box(ui.BoxProps{Class: "flex items-center justify-between gap-4"}) {
+				@ui.Title(ui.TitleProps{Order: 2, FontSize: "xl", FontWeight: "semibold"}, "Categories")
+			}
+			@ui.Grid(ui.GridProps{Class: "grid grid-cols-2 gap-4 lg:grid-cols-4"}) {
+				for _, item := range items {
+					@cmp.Card(cmp.CardProps{Tag: "article", Class: "overflow-hidden"}) {
+						@cmp.CardContent(cmp.CardContentProps{Class: "p-4"}) {
+							@ui.Stack(ui.StackProps{Class: "gap-4"}) {
+								@ui.Box(ui.BoxProps{Class: "relative overflow-hidden rounded-lg bg-muted"}) {
+									@ui.Image(ui.ImageProps{Src: imageSrc(item.Image, PlaceholderSofa), Alt: item.Image.Alt, Class: "h-40 w-full object-cover"})
+									if strings.TrimSpace(item.Href) != "" {
+										@ui.Button(ui.ButtonProps{Href: item.Href, Variant: "outline", Size: "icon", AriaLabel: item.Title, Class: "absolute bottom-2 right-2 h-8 w-8 rounded-full"}, ">")
+									}
+								}
+								@ui.Stack(ui.StackProps{Class: "gap-1"}) {
+									@ui.Text(ui.TextProps{FontWeight: "semibold"}, item.Title)
+									@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, item.Count)
+								}
+							}
+						}
+					}
+				}
+			}
+		</section>
+	}
+}
+
+templ CollectionStrip(items []CollectionCard) {
+	if len(items) > 0 {
+		<section id="collections" class="ui-stack gap-4">
+			@ui.Box(ui.BoxProps{Class: "flex items-center justify-between gap-4"}) {
+				@ui.Title(ui.TitleProps{Order: 2, FontSize: "xl", FontWeight: "semibold"}, "Collections")
+				@ui.Button(ui.ButtonProps{Variant: "link", Size: "sm", Class: "rounded-full"}, "View all ->")
+			}
+			@ui.Grid(ui.GridProps{Class: "grid grid-cols-2 gap-4 lg:grid-cols-4"}) {
+				for _, item := range items {
+					@ui.Box(ui.BoxProps{Tag: "article", Class: "relative min-h-52 overflow-hidden rounded-lg border border-border bg-card p-4 shadow-sm"}) {
+						@ui.Image(ui.ImageProps{Src: imageSrc(item.Image, PlaceholderChair), Alt: item.Image.Alt, Class: "absolute inset-0 h-full w-full object-cover opacity-50"})
+						@ui.Stack(ui.StackProps{Class: "relative z-10 h-full justify-end gap-2"}) {
+							if strings.TrimSpace(item.Label) != "" {
+								@ui.Badge(ui.BadgeProps{Variant: "secondary"}, item.Label)
+							}
+							@ui.Title(ui.TitleProps{Order: 3, FontSize: "lg"}, item.Title)
+							if strings.TrimSpace(item.Description) != "" {
+								@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground"}, item.Description)
+							}
+						}
+					}
+				}
+			}
+		</section>
+	}
+}
+
+templ BenefitsBar(items []BenefitItem) {
+	if len(items) > 0 {
+		<section id="about">
+			<div id="delivery" class="scroll-mt-24"></div>
+			@ui.Grid(ui.GridProps{Class: "grid grid-cols-2 gap-4 lg:grid-cols-4"}) {
+				for _, item := range items {
+					@ui.Group(ui.GroupProps{Class: "items-start gap-4 rounded-lg border border-border bg-card p-4"}) {
+						<span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background">
+							@ui.Icon(ui.IconProps{Name: item.Icon, Size: "md"})
+						</span>
+						@ui.Stack(ui.StackProps{Class: "gap-1"}) {
+							@ui.Text(ui.TextProps{FontSize: "sm", FontWeight: "semibold"}, item.Title)
+							@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, item.Description)
+						}
+					}
+				}
+			}
+		</section>
+	}
+}
+
+templ ProductShowcase(props ProductPreview) {
+	<section id="catalog">
+	@ui.Grid(ui.GridProps{Cols: "1-2", Class: "gap-6"}) {
+		@ui.GridCol(ui.GridColProps{}) {
+			@ui.Group(ui.GroupProps{Class: "items-stretch gap-4"}) {
+				@ui.Stack(ui.StackProps{Class: "hidden gap-4 md:flex"}) {
+					for _, image := range props.Gallery {
+						@ui.Box(ui.BoxProps{Class: "h-20 w-20 overflow-hidden rounded-lg border border-border bg-muted"}) {
+							@ui.Image(ui.ImageProps{Src: imageSrc(image, PlaceholderProduct), Alt: image.Alt, Class: "h-full w-full object-cover"})
+						}
+					}
+				}
+				@ui.Box(ui.BoxProps{Class: "relative flex-1 overflow-hidden rounded-lg border border-border bg-muted"}) {
+					@ui.Image(ui.ImageProps{Src: imageSrc(props.MainImage, PlaceholderProduct), Alt: props.MainImage.Alt, Class: "h-full min-h-96 w-full object-cover"})
+					@ui.Button(ui.ButtonProps{Variant: "outline", Size: "icon", Class: "absolute bottom-4 left-4 h-8 w-8 rounded-full", AriaLabel: "Zoom"}, "⌕")
+				}
+			}
+		}
+		@ui.GridCol(ui.GridColProps{}) {
+			@cmp.Card(cmp.CardProps{Tag: "section", Class: "h-full"}) {
+				@cmp.CardContent(cmp.CardContentProps{Class: "p-6"}) {
+					@ui.Stack(ui.StackProps{Class: "gap-4"}) {
+						if strings.TrimSpace(props.Badge) != "" {
+							@ui.Badge(ui.BadgeProps{Variant: "secondary"}, props.Badge)
+						}
+						@ui.Group(ui.GroupProps{Class: "justify-between"}) {
+							@ui.Title(ui.TitleProps{Order: 2, FontSize: "xl"}, props.Name)
+							@ui.Text(ui.TextProps{FontWeight: "semibold"}, props.Price)
+						}
+						if strings.TrimSpace(props.Description) != "" {
+							@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground", LineHeight: "relaxed"}, props.Description)
+						}
+						@SwatchGroup(props.ColorsLabel, props.Colors, props.SelectedColor)
+						@ui.Group(ui.GroupProps{Class: "flex-wrap justify-between"}) {
+							@QuantityStepper(props.Quantity)
+							@ui.Group(ui.GroupProps{Class: "gap-2"}) {
+								if hasAction(props.AddAction) {
+									@ui.Button(ui.ButtonProps{Href: props.AddAction.Href, Variant: "primary", AriaLabel: actionLabel(props.AddAction), Class: "rounded-full"}, props.AddAction.Label)
+								}
+								@ui.Button(ui.ButtonProps{Variant: "outline", Size: "icon", AriaLabel: actionLabel(props.FavoriteAction), Class: "rounded-full"}, "♡")
+							}
+						}
+						if len(props.Details) > 0 {
+							@ui.Stack(ui.StackProps{Class: "divide-y divide-border rounded-lg border border-border"}) {
+								for _, row := range props.Details {
+									@ui.Group(ui.GroupProps{Class: "justify-between px-4 py-3"}) {
+										@ui.Text(ui.TextProps{FontSize: "sm"}, row.Label)
+										@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground"}, row.Value)
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	</section>
+}
+
+templ RightRail(props RailProps) {
+	@CartSummaryCard(props.Cart)
+	@FilterCard(props.Filter)
+	@InspirationPanel(props.Inspiration)
+	@NewsletterCard(props.Newsletter)
+	if len(props.Socials) > 0 {
+		@ui.Group(ui.GroupProps{Class: "justify-center gap-4"}) {
+			for _, social := range props.Socials {
+				@ui.ButtonBlock(ui.ButtonProps{Href: social.Href, Variant: "outline", Size: "icon", AriaLabel: actionLabel(social), Class: "rounded-full"}) {
+					if strings.TrimSpace(social.Icon) != "" {
+						@ui.Icon(ui.IconProps{Name: social.Icon, Size: "sm"})
+					} else {
+						{ social.Label }
+					}
+				}
+			}
+		}
+	}
+}
+
+templ CartSummaryCard(props CartSummary) {
+	@cmp.Card(cmp.CardProps{Tag: "aside"}) {
+		@cmp.CardHeader(cmp.CardHeaderProps{}) {
+			@ui.Group(ui.GroupProps{Class: "justify-between"}) {
+				@cmp.CardTitle(cmp.CardTitleProps{Order: 2}, props.Title)
+				if strings.TrimSpace(props.CountLabel) != "" {
+					@ui.Badge(ui.BadgeProps{Size: "sm"}, props.CountLabel)
+				}
+			}
+		}
+		@cmp.CardContent(cmp.CardContentProps{}) {
+			@ui.Stack(ui.StackProps{Class: "gap-4"}) {
+				for _, item := range props.Items {
+					@ui.Group(ui.GroupProps{Class: "items-start gap-4"}) {
+						@ui.Box(ui.BoxProps{Class: "h-16 w-16 overflow-hidden rounded border border-border bg-muted"}) {
+							@ui.Image(ui.ImageProps{Src: imageSrc(item.Image, PlaceholderSofa), Alt: item.Image.Alt, Class: "h-full w-full object-cover"})
+						}
+						@ui.Stack(ui.StackProps{Class: "flex-1 gap-1"}) {
+							@ui.Text(ui.TextProps{FontSize: "sm", FontWeight: "semibold"}, item.Title)
+							@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, item.Subtitle)
+							@ui.Text(ui.TextProps{FontSize: "sm", FontWeight: "semibold"}, item.Price)
+						}
+						@ui.Button(ui.ButtonProps{Variant: "ghost", Size: "icon", Class: "h-8 w-8 rounded-full", AriaLabel: "Remove"}, "×")
+					}
+				}
+				@ui.Group(ui.GroupProps{Class: "justify-between border-t border-border pt-4"}) {
+					@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground"}, props.TotalLabel)
+					@ui.Text(ui.TextProps{FontSize: "sm", FontWeight: "semibold"}, props.Total)
+				}
+				if hasAction(props.CheckoutAction) {
+					@ui.Button(ui.ButtonProps{Href: props.CheckoutAction.Href, Variant: "primary", AriaLabel: actionLabel(props.CheckoutAction), Class: "rounded-full"}, props.CheckoutAction.Label)
+				}
+				if hasAction(props.ViewCartAction) {
+					@ui.Button(ui.ButtonProps{Href: props.ViewCartAction.Href, Variant: "secondary", AriaLabel: actionLabel(props.ViewCartAction), Class: "rounded-full"}, props.ViewCartAction.Label)
+				}
+			}
+		}
+	}
+}
+
+templ FilterCard(props FilterPanel) {
+	@cmp.Card(cmp.CardProps{Tag: "aside"}) {
+		@cmp.CardHeader(cmp.CardHeaderProps{}) {
+			@ui.Group(ui.GroupProps{Class: "justify-between"}) {
+				@cmp.CardTitle(cmp.CardTitleProps{Order: 2}, props.Title)
+				@ui.Button(ui.ButtonProps{Variant: "link", Size: "sm", Class: "rounded-full"}, props.ResetLabel)
+			}
+		}
+		@cmp.CardContent(cmp.CardContentProps{}) {
+			@ui.Stack(ui.StackProps{Class: "gap-4"}) {
+				@ui.Field(ui.FieldProps{Label: props.CategoryLabel, Value: props.CategoryValue, Disabled: true})
+				@SwatchGroup(props.MaterialLabel, props.Materials, "")
+				@PriceRangeControl(props.Price)
+				@SwatchGroup(props.ColorLabel, props.Colors, "")
+				if hasAction(props.ShowAllAction) {
+					@ui.Button(ui.ButtonProps{Href: props.ShowAllAction.Href, Variant: "secondary", AriaLabel: actionLabel(props.ShowAllAction), Class: "rounded-full"}, props.ShowAllAction.Label)
+				}
+			}
+		}
+	}
+}
+
+templ InspirationPanel(props InspirationCard) {
+	@ui.Box(ui.BoxProps{Tag: "aside", Class: "relative min-h-48 overflow-hidden rounded-lg border border-border bg-card p-4 shadow-sm"}) {
+		@ui.Image(ui.ImageProps{Src: imageSrc(props.Image, PlaceholderVase), Alt: props.Image.Alt, Class: "absolute inset-0 h-full w-full object-cover opacity-40"})
+		@ui.Stack(ui.StackProps{Class: "relative z-10 h-full justify-end gap-2"}) {
+			@ui.Title(ui.TitleProps{Order: 2, FontSize: "lg"}, props.Title)
+			if strings.TrimSpace(props.Description) != "" {
+				@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground"}, props.Description)
+			}
+			if hasAction(props.Action) {
+				@ui.Button(ui.ButtonProps{Href: props.Action.Href, Variant: "link", Size: "sm", AriaLabel: actionLabel(props.Action), Class: "rounded-full"}, props.Action.Label)
+			}
+		}
+	}
+}
+
+templ NewsletterCard(props NewsletterProps) {
+	@cmp.Card(cmp.CardProps{Tag: "aside"}) {
+		@cmp.CardContent(cmp.CardContentProps{Class: "p-6"}) {
+			@ui.Stack(ui.StackProps{Class: "gap-4"}) {
+				@ui.Title(ui.TitleProps{Order: 2, FontSize: "lg"}, props.Title)
+				if strings.TrimSpace(props.Description) != "" {
+					@ui.Text(ui.TextProps{FontSize: "sm", TextColor: "muted-foreground"}, props.Description)
+				}
+				@ui.Group(ui.GroupProps{Class: "items-end gap-2"}) {
+					@ui.Field(ui.FieldProps{Name: "email", Type: "email", Placeholder: props.Placeholder, AriaLabel: props.Placeholder, Class: "min-h-11 rounded-full px-4 py-2 text-xs"})
+					@ui.Button(ui.ButtonProps{Variant: "primary", Size: "icon", AriaLabel: props.SubmitLabel, Class: "h-11 w-11 rounded-full"}, "->")
+				}
+			}
+		}
+	}
+}
+
+templ Footer(props FooterProps) {
+	<footer id="contacts" class="mt-8 border-t border-border pt-6">
+		@ui.Grid(ui.GridProps{Cols: "1-4", Class: "gap-6"}) {
+			@ui.Stack(ui.StackProps{Class: "gap-2"}) {
+				@ui.Text(ui.TextProps{FontWeight: "semibold"}, props.BrandName)
+				@ui.Text(ui.TextProps{FontSize: "xs", TextColor: "muted-foreground"}, props.Copyright)
+			}
+			for _, group := range props.Groups {
+				@ui.Stack(ui.StackProps{Class: "gap-2"}) {
+					@ui.Text(ui.TextProps{FontSize: "sm", FontWeight: "semibold"}, group.Title)
+					for _, link := range group.Links {
+						@ui.Button(ui.ButtonProps{Href: link.Href, Variant: "link", Size: "sm", Class: "justify-start rounded-full p-0", AriaLabel: actionLabel(link)}, link.Label)
+					}
+				}
+			}
+		}
+	</footer>
+}

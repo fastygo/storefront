@@ -12,7 +12,8 @@ import (
 	t "github.com/a-h/templ"
 	"github.com/fastygo/framework/pkg/app"
 	"github.com/fastygo/framework/pkg/web/view"
-	storefrontui "github.com/fastygo/storefront/internal/site/storefrontui"
+	"github.com/fastygo/storefront/internal/site/ui/elements/navigation"
+	"github.com/fastygo/storefront/internal/site/ui/elements/toggles"
 	ui8layout "github.com/fastygo/ui8kit/layout"
 )
 
@@ -69,7 +70,7 @@ func Layout(data LayoutData, headExtra t.Component, body t.Component) templ.Comp
 				SwitchToDarkLabel:  data.ThemeToggle.SwitchToDarkLabel,
 				SwitchToLightLabel: data.ThemeToggle.SwitchToLightLabel,
 			},
-			ThemeToggleComponent: storefrontui.DarkModeToggle(storefrontui.DarkModeToggleProps{
+			ThemeToggleComponent: toggles.DarkModeToggle(toggles.DarkModeToggleProps{
 				Label:              data.ThemeToggle.Label,
 				SwitchToDarkLabel:  data.ThemeToggle.SwitchToDarkLabel,
 				SwitchToLightLabel: data.ThemeToggle.SwitchToLightLabel,
@@ -103,7 +104,7 @@ func HeaderActions(language view.LanguageToggleData, navItems []app.NavItem) tem
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = storefrontui.HeaderNav(storefrontui.HeaderNavProps{
+		templ_7745c5c3_Err = navigation.HeaderNav(navigation.HeaderNavProps{
 			Items: headerNavigationItems(navItems),
 			Label: "Storefront navigation",
 		}).Render(ctx, templ_7745c5c3_Buffer)
@@ -139,10 +140,9 @@ func LanguageToggle(data view.LanguageToggleData) templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = storefrontui.HeaderLanguageToggle(storefrontui.HeaderLanguageToggleProps{
-			Toggle: storefrontui.LanguageToggleProps{
+		templ_7745c5c3_Err = toggles.HeaderLanguageToggle(toggles.HeaderLanguageToggleProps{
+			Toggle: toggles.LanguageToggleProps{
 				ID:               "storefront-language-toggle",
-				Class:            "ui-header-action-btn",
 				Href:             data.NextHref,
 				DefaultLocale:    data.DefaultLocale,
 				CurrentLocale:    data.CurrentLocale,
@@ -201,10 +201,10 @@ func toShellNavItems(items []app.NavItem) []ui8layout.NavItem {
 	return out
 }
 
-func headerNavigationItems(items []app.NavItem) []storefrontui.NavItem {
-	out := make([]storefrontui.NavItem, 0, len(items))
+func headerNavigationItems(items []app.NavItem) []navigation.NavItem {
+	out := make([]navigation.NavItem, 0, len(items))
 	for _, item := range items {
-		out = append(out, storefrontui.NavItem{
+		out = append(out, navigation.NavItem{
 			Label: item.Label,
 			Href:  item.Path,
 		})

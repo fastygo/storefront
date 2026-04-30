@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 
-APP := bin/pwa
+APP := bin/storefront
 
-.PHONY: dev build vendor-assets css generate test lint
+.PHONY: dev build css generate test lint
 
 dev:
 	templ generate ./...
@@ -13,9 +13,6 @@ build:
 	templ generate ./...
 	bun run build:css
 	go build -o $(APP) ./cmd/server
-
-vendor-assets:
-	bun run vendor:assets
 
 css:
 	bun run build:css

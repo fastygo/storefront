@@ -28,6 +28,7 @@ type ActionFixture struct {
 	Label     string `json:"label"`
 	Href      string `json:"href"`
 	AriaLabel string `json:"aria_label"`
+	Icon      string `json:"icon"`
 }
 
 type ImageFixture struct {

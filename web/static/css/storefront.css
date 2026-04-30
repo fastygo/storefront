@@ -1,8 +1,107 @@
 @layer components {
   /* Storefront landing refinements while the block API is still generic. */
+  .ui-shell-body--marketing {
+    --store-radius-card: 1.5rem;
+    --store-radius-hero: 1.5rem;
+    --store-shadow-soft: 0 18px 45px color-mix(in srgb, var(--foreground) 7%, transparent);
+    --store-shadow-card: 0 10px 28px color-mix(in srgb, var(--foreground) 5%, transparent);
+    --latty-leaf: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xMSAyMEE3IDcgMCAwIDEgNCAxM2MwLTUgNC04IDExLTkgMyA2IDIgMTAtMSAxM2E3IDcgMCAwIDEtMyAzWiIvPjxwYXRoIGQ9Ik00IDEzYzQgMCA3IDEgOSA0Ii8+PC9zdmc+");
+    --latty-hand: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xOCAxMVY2YTIgMiAwIDAgMC00IDB2NSIvPjxwYXRoIGQ9Ik0xNCAxMFY0YTIgMiAwIDAgMC00IDB2OCIvPjxwYXRoIGQ9Ik0xMCAxMVY2YTIgMiAwIDAgMC00IDB2OCIvPjxwYXRoIGQ9Ik02IDE0di0yYTIgMiAwIDEgMC00IDB2M2MwIDQgMyA3IDcgN2gzYTYgNiAwIDAgMCA2LTZ2LTVhMiAyIDAgMSAwLTQgMCIvPjwvc3ZnPg==");
+    --latty-globe: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0iTTIgMTJoMjAiLz48cGF0aCBkPSJNMTIgMmExNSAxNSAwIDAgMSAwIDIwIi8+PHBhdGggZD0iTTEyIDJhMTUgMTUgMCAwIDAgMCAyMCIvPjwvc3ZnPg==");
+    --latty-truck: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCAxOFY2SDN2MTJoMiIvPjxwYXRoIGQ9Ik0xNSAxOGgyIi8+PHBhdGggZD0iTTE5IDE4aDJ2LTVsLTMtNGgtNCIvPjxjaXJjbGUgY3g9IjciIGN5PSIxOCIgcj0iMiIvPjxjaXJjbGUgY3g9IjE3IiBjeT0iMTgiIHI9IjIiLz48L3N2Zz4=");
+    --latty-vimeo: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik00IDhjMS41LTEuMiAzLTEuNSA0IDFsMi4yIDUuNWMuNiAxLjUgMS44IDEuNiAyLjkuM0wxNy44IDljMS4xLTEuNC40LTIuOC0xLjItMi41LTEgLjItMS44IDEtMi40IDIuNCIvPjxwYXRoIGQ9Ik03IDlsMyA3Ii8+PC9zdmc+");
+    --latty-send: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMiAyIDExIDEzIi8+PHBhdGggZD0ibTIyIDItNyAyMC00LTktOS00WiIvPjwvc3ZnPg==");
+    --latty-vk: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik00IDdoM2wyLjMgNS4xYy41IDEuMSAxLjEgMS45IDEuNyAyLjNWN2gzdjQuMmwzLjItNC4ySDIxbC00LjEgNS4xTDIxIDE3aC0zLjhsLTMuMi0zLjhWMTdoLTIuNWMtMi41IDAtNC40LTEuNC01LjgtNC4zWiIvPjwvc3ZnPg==");
+  }
+
+  .ui-shell-body--marketing .latty-vimeo {
+    mask-image: var(--latty-vimeo);
+    -webkit-mask-image: var(--latty-vimeo);
+  }
+
+  .ui-shell-body--marketing .latty-leaf {
+    mask-image: var(--latty-leaf);
+    -webkit-mask-image: var(--latty-leaf);
+  }
+
+  .ui-shell-body--marketing .latty-hand {
+    mask-image: var(--latty-hand);
+    -webkit-mask-image: var(--latty-hand);
+  }
+
+  .ui-shell-body--marketing .latty-globe {
+    mask-image: var(--latty-globe);
+    -webkit-mask-image: var(--latty-globe);
+  }
+
+  .ui-shell-body--marketing .latty-truck {
+    mask-image: var(--latty-truck);
+    -webkit-mask-image: var(--latty-truck);
+  }
+
+  .ui-shell-body--marketing .latty-send {
+    mask-image: var(--latty-send);
+    -webkit-mask-image: var(--latty-send);
+  }
+
+  .ui-shell-body--marketing .latty-vk {
+    mask-image: var(--latty-vk);
+    -webkit-mask-image: var(--latty-vk);
+  }
+
   .dark .ui-shell-body--marketing .ui-header {
-    border-color: color-mix(in srgb, var(--border) 78%, var(--primary) 22%);
-    background-color: color-mix(in srgb, var(--background) 88%, var(--primary) 12%);
+    border-color: color-mix(in srgb, var(--border) 84%, hsl(215 16% 36%) 16%);
+    background-color: color-mix(in srgb, var(--background) 82%, hsl(215 14% 18%) 18%);
+  }
+
+  .ui-shell-body--marketing .ui-header-nav {
+    gap: 0.25rem;
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    border-radius: 9999px;
+    padding: 0.25rem;
+    background-color: color-mix(in srgb, var(--card) 86%, transparent);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--foreground) 4%, transparent);
+  }
+
+  .ui-shell-body--marketing .ui-header-nav-link {
+    border-radius: 9999px;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .ui-shell-body--marketing .ui-shell-main :is(.ui-button, a.inline-flex, button.inline-flex) {
+    border-radius: 9999px !important;
+  }
+
+  .ui-shell-body--marketing .ui-shell-main :is(.ui-card, article, aside) {
+    border-radius: var(--store-radius-card);
+  }
+
+  .ui-shell-body--marketing .ui-card {
+    border-color: color-mix(in srgb, var(--border) 72%, transparent);
+    box-shadow: var(--store-shadow-card);
+  }
+
+  .dark .ui-shell-body--marketing {
+    --store-shadow-soft:
+      0 10px 24px color-mix(in srgb, black 28%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 4%, transparent);
+    --store-shadow-card:
+      0 6px 14px color-mix(in srgb, black 22%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 3%, transparent);
+  }
+
+  .dark .ui-shell-body--marketing .ui-card {
+    box-shadow: var(--store-shadow-card);
+  }
+
+  .ui-shell-body--marketing #collections > .ui-grid > article:first-child {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 639px) {
+    .ui-shell-body--marketing #collections > .ui-grid > article:first-child {
+      grid-column: span 1;
+    }
   }
 
   .ui-shell-body--marketing
@@ -14,9 +113,9 @@
     > .ui-stack
     > section:first-child {
     border-color: transparent;
-    border-radius: 2rem;
+    border-radius: var(--store-radius-hero);
     background-color: var(--card);
-    box-shadow: 0 18px 60px color-mix(in srgb, var(--foreground) 8%, transparent);
+    box-shadow: var(--store-shadow-soft);
   }
 
   .dark
@@ -29,9 +128,7 @@
     > .ui-stack
     > section:first-child {
     background-color: color-mix(in srgb, var(--card) 94%, var(--primary) 6%);
-    box-shadow:
-      0 24px 70px color-mix(in srgb, black 48%, transparent),
-      inset 0 1px 0 color-mix(in srgb, var(--primary) 18%, transparent);
+    box-shadow: var(--store-shadow-soft);
   }
 
   .ui-shell-body--marketing
@@ -123,7 +220,72 @@
     > section:first-child
     > .ui-grid
     > .relative {
-    border-radius: 1.75rem;
+    border-radius: var(--store-radius-card);
+  }
+
+  .ui-shell-body--marketing
+    .ui-shell-main
+    > .w-full
+    > .ui-container
+    > .ui-grid
+    > .grid
+    .ui-card-content
+    input[type="email"] {
+    min-height: 2.75rem;
+    border-radius: 9999px;
+    padding-inline: 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+  }
+
+  .ui-shell-body--marketing
+    .ui-shell-main
+    > .w-full
+    > .ui-container
+    > .ui-grid
+    > .grid
+    .ui-card-content
+    input[type="email"]::placeholder {
+    color: color-mix(in srgb, var(--muted-foreground) 78%, transparent);
+  }
+
+  .ui-shell-body--marketing
+    .ui-shell-main
+    > .w-full
+    > .ui-container
+    > .ui-grid
+    > .grid
+    .ui-card-content
+    input[type="email"]
+    + button {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    align-self: stretch;
+    border-radius: 9999px;
+    font-size: 0.95rem;
+  }
+
+  .ui-shell-body--marketing
+    .ui-shell-main
+    > .w-full
+    > .ui-container
+    > .ui-grid
+    > .grid
+    > .ui-group {
+    padding-block: 0.25rem;
+  }
+
+  .ui-shell-body--marketing
+    .ui-shell-main
+    > .w-full
+    > .ui-container
+    > .ui-grid
+    > .grid
+    > .ui-group
+    .ui-button {
+    border-radius: 9999px;
+    background-color: color-mix(in srgb, var(--card) 76%, transparent);
   }
 
   .dark
@@ -139,6 +301,11 @@
     > .relative {
     background-color: color-mix(in srgb, var(--card) 82%, var(--primary) 18%);
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 12%, transparent);
+  }
+
+  .dark .ui-shell-body--marketing .ui-header-nav {
+    background-color: color-mix(in srgb, var(--background) 78%, hsl(215 14% 18%) 22%);
+    box-shadow: 0 6px 16px color-mix(in srgb, black 20%, transparent);
   }
 
   @media (min-width: 768px) {

@@ -2,7 +2,7 @@
 @source "../../../internal/site/views/**/*.templ";
 @source "../../../internal/site/views/**/*.go";
 @source "../../../internal/site/**/*.go";
-@source "../../../internal/site/storefrontui/**/*.templ";
+@source "../../../internal/site/ui/**/*.templ";
 @source "../../../cmd/**/*.go";
 @source "../js/**/*.js";
 

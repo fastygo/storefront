@@ -1,6 +1,6 @@
 package views
 
-import storefrontui "github.com/fastygo/storefront/internal/site/storefrontui"
+import storefrontui "github.com/fastygo/storefront/internal/site/ui/blocks/storefront"
 
 templ StorefrontPage(data Page) {
 	@storefrontui.StorefrontPage(storefrontProps(data))
@@ -254,5 +254,6 @@ func action(item Action) storefrontui.Action {
 		Label:     item.Label,
 		Href:      item.Href,
 		AriaLabel: item.AriaLabel,
+		Icon:      item.Icon,
 	}
 }

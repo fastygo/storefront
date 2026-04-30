@@ -6,5 +6,6 @@ tmp/
 *.test
 coverage.out
 .manual/
+.project/
 .cursorignore
 node_modules/

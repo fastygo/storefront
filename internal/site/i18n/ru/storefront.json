@@ -18,7 +18,7 @@
     }
   },
   "nav": [
-    { "label": "Каталог", "href": "/", "aria_label": "Открыть каталог" },
+    { "label": "Каталог", "href": "#catalog", "aria_label": "Открыть каталог" },
     { "label": "Коллекции", "href": "#collections", "aria_label": "Смотреть коллекции" },
     { "label": "О нас", "href": "#about", "aria_label": "О магазине" },
     { "label": "Доставка", "href": "#delivery", "aria_label": "Информация о доставке" },
@@ -140,9 +140,9 @@
       "submit_label": "Подписаться"
     },
     "socials": [
-      { "label": "IG", "href": "#", "aria_label": "Instagram" },
-      { "label": "PI", "href": "#", "aria_label": "Pinterest" },
-      { "label": "TG", "href": "#", "aria_label": "Telegram" }
+      { "label": "Vimeo", "href": "#", "aria_label": "Vimeo", "icon": "vimeo" },
+      { "label": "TG", "href": "#", "aria_label": "Telegram", "icon": "send" },
+      { "label": "VK", "href": "#", "aria_label": "VK", "icon": "vk" }
     ]
   },
   "footer": {
